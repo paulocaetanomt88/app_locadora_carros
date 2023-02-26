@@ -1,3 +1,118 @@
+# Estudo de API com Laravel
+## API de Locadora de Carros
+#### ( em desenvolvimento )
+#### seguindo as seções 17, 18 e 19 do curso de Desenvolvimento Web Avançado com PHP, Laravel e Vue.JS na plataforma Udemy
+  
+
+<p>Na seção "17 - APIS, Web services e REST", serão abordados os tópicos:</p>
+<ul>
+    <li>Criação das Models, Controllers e Migrations</li>
+    <li>Configurar conexão com o banco de dados</li>
+    <li>Entendendo o grupo de rotas Web e API e a importância do Content-Type</li>
+    <li>Rotas e a diferença entre Route::resource e Route::apiResource</li>
+    <li>Extra (fix da aula anterior) - Atributo $namespace de RouteServiceProvide</li>
+    <li>Criando registros via POST</li>
+    <li>Selecionando registros via GET</li>
+    <li>Atualizando registros via PUT e PATCH</li>
+    <li>Removendo registros via DELETE</li>
+    <li>Extra - Entendendo o conceito de endpoint (URL, URN e URI)</li>
+    <li>Injetando a instância do Model no Controller e como lidar com o Type Hinting</li>
+    <li>Validações parte 1 - Controle de fluxos</li>
+    <li>Validações parte 2 - Status Code HTTP</li>
+    <li>Validações parte 3 - Validando parâmetros e a importância do Accept</li>
+    <li>Implementando as regras de validação (Rules) no Model</li>
+    <li>Validações parte 4 - Regras de validação no Update - Lidando com o Unique</li>
+    <li>Validações parte 5 - Regras de validação no Update - Lidando com o PUT/PATCH</li>
+    <li>Upload de arquivos - Implementando o upload de imagens</li>
+    <li>Upload de arquivos - Criando um link simbólico para o disco public</li>
+    <li>Correção do link simbólico do projeto</li>
+    <li>Upload de arquivos - Atualizando imagens</li>
+    <li>Upload de arquivos - Removendo imagens</li>
+    <li>API WebService Rest para o Resource Modelo</li>
+    <li>Testando os endpoints de modelo</li>
+    <li>Adicionando o relacionamento entre modelos e marcas</li>
+    <li>Refactoring do endpoint update de marca e modelo</li>
+    <li>Filtros - Selecionando os atributos de retorno</li>
+    <li>Filtros - Obtendo colunas específicas com a instrução with()</li>
+    <li>Filtros - Aplicando condições nas pesquisas parte 1</li>
+    <li>Filtros - Aplicando os filtros ao resource Marca</li>
+    <li>Repository Design Pattern - Introdução</li>
+    <li>Repository Design Pattern - Implementando um Repository para Marca</li>
+    <li>Repository Design Pattern - Implementando um Repository para Modelo</li>
+    <li>Repository Design Pattern - Implementando um Abstract Repository</li>
+    <li>API WebService Rest para o Resource Carro</li>
+    <li>API WebService Rest para o Resource Cliente</li>
+    <li>API WebService Rest para o Resource Locacoes</li>
+</ul>
+  
+
+<p>Na seção "18 - Autenticação API com Autorização JWT (JSON Web Token)", serão abordados os tópicos:</p>
+<ul>
+    <li>Introdução ao JWT (Json Web Token)</li>
+    <li>Instalando o pacote JWT-Auth</li>
+    <li>Configurando o JWT-Auth no projeto</li>
+    <li>Implementando a interface JWTSubject no model User e o Auth Guard API Driver JWT</li>
+    <li>Criando as rotas de autenticação e autorização e o AuthController</li>
+    <li>Implementando o método de login (autenticação) e o JWT (autorização)</li>
+    <li>Configurando rotas protegidas por autorização</li>
+    <li>Criando um grupo de rotas protegidas com um prefix de versionamento</li>
+    <li>Enviando o JWT de autorização nas requisições (Authorization Bearer)</li>
+    <li>Recuperando os dados do usuário autenticado com base no JWT</li>
+    <li>Atualizando o JWT (renovando a autorização)</li>
+    <li>Invalidando o JWT (revogando a autorização)</li>
+    <li>Anatomia do JWT (Json Web Token)</li>
+    <li>Expirando o JWT por tempo limite</li>
+</ul>
+  
+
+<p>Na seção "19 - Aplicação Full Stack Back-end API Laravel com Front-end Vue.JS", serão abordados os tópicos:</p>
+<ul>
+    <li>Configurando o Vue.JS no Laravel</li>
+    <li>Evitando erros com o projeto da seção</li>
+    <li>Convertendo a view login em um componente Vue</li>
+    <li>Gerando o build da aplicação front com o npm run watch</li>
+    <li>Vue Props - Encaminhando o token csrf para o componente Login</li>
+    <li>Implementando a autenticação web (sessão) e API (JWT)</li>
+    <li>Convertendo a view home em um componente Vue</li>
+    <li>Criando o menu de navegação da aplicação</li>
+    <li>Criando a rota, a view e o componente</li>
+    <li>Criando o card de busca de registros</li>
+    <li>Criando um componente Vue para encapsular inputs</li>
+    <li>Criando o card de listagem de registros</li>
+    <li>Criando um componente Vue para tables</li>
+    <li>Criando um componente Vue para cards</li>
+    <li>Extra - Adicionando um breadcrumb</li>
+    <li>Criando um modal para inclusão de registros de marcas</li>
+    <li>Adicionando os inputs no modal de registros de marcas</li>
+    <li>Cadastrando marcas</li>
+    <li>Entendendo como o token de autorização é anexado as requisições</li>
+    <li>Adicionando o token de autorização ao cabeçalho das requisições</li>
+    <li>Corrigindo o erro de inclusão do popper.js.map</li>
+    <li>Configurando os alertas de sucesso e erro do cadastro de marcas</li>
+    <li>Evitando dependências nos componentes Vue</li>
+    <li>Recuperando os registros de marcas</li>
+    <li>Adicionando os cabeçalhos na requisição de marcas</li>
+    <li>Listando os registros de marcas</li>
+    <li>Evitando dependências no componente Table</li>
+    <li>Adicionando metadados aos títulos da listagem</li>
+    <li>Adicionando a paginação de registros</li>
+    <li>Corrigindo o atributo marcas</li>
+    <li>Adicionando a paginação de registros</li>
+    <li>Buscando registros</li>
+    <li>Adicionando os botões para visualização, atualização e remoção de registros</li>
+    <li>Implementando o modal de visualização da marca</li>
+    <li>Instalando e configurando o Vuex no projeto</li>
+    <li>Implementando o modal de remoção de registros</li>
+    <li>Implementando o modal de atualização de registros</li>
+    <li>Refactoring do update de marca do lado do back-end</li>
+    <li>Adicionando filtros para formatação de datas</li>
+    <li>Axios - Interceptando requisições e respostas HTTP</li>
+    <li>Axios - Interceptando o request e configurando os headers</li>
+    <li>Axios - Interceptando o response e realizando um auto refresh do JWT</li>
+    <li>Considerações finais sobre a seção e o projeto prático</li>
+</ul>
+  
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
 
 <p align="center">
@@ -20,42 +135,6 @@ Laravel is a web application framework with expressive, elegant syntax. We belie
 - [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
 
 Laravel is accessible, powerful, and provides tools required for large, robust applications.
-
-## Learning Laravel
-
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
-
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-## Laravel Sponsors
-
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
-
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/)**
-- **[OP.GG](https://op.gg)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
 
 ## License
 
