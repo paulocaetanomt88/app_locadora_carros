@@ -6,23 +6,19 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateMarcasTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
+    // Migration que cria a tabela marcas no banco de dados
     public function up()
     {
         Schema::create('marcas', function (Blueprint $table) {
             $table->id();
+            $table->string('nome', 30)->unique();
+            $table->string('imagem', 100)->comment('Logo marca');
             $table->timestamps();
         });
     }
 
     /**
-     * Reverse the migrations.
-     *
-     * @return void
+     * Reverter as ações da migrations.
      */
     public function down()
     {
