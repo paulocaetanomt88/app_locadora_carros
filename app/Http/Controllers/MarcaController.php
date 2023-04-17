@@ -14,18 +14,11 @@ class MarcaController extends Controller
      */
     public function index()
     {
-        //
+        $marcas = Marca::all();
+        return $marcas;
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+
 
     /**
      * Store a newly created resource in storage.
@@ -35,7 +28,8 @@ class MarcaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $marca = Marca::create($request->all());
+        return $marca;
     }
 
     /**
@@ -46,18 +40,8 @@ class MarcaController extends Controller
      */
     public function show(Marca $marca)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Marca  $marca
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Marca $marca)
-    {
-        //
+        $marca = Marca::findOrFail($marca->id);
+        return $marca;
     }
 
     /**
@@ -69,7 +53,9 @@ class MarcaController extends Controller
      */
     public function update(Request $request, Marca $marca)
     {
-        //
+
+        $marca->update($request->all());
+        return $marca;
     }
 
     /**
@@ -80,6 +66,7 @@ class MarcaController extends Controller
      */
     public function destroy(Marca $marca)
     {
-        //
+        $marca->delete();
+        return ['msg' => 'A marca foi removida com sucesso!'];
     }
 }
