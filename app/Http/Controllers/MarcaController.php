@@ -25,7 +25,7 @@ class MarcaController extends Controller
     {
         //$marcas = Marca::all(); // apenas executando o método estático all()
         $marcas = $this->marca->all(); // trabalhando, de fato, com o objeto
-        
+
         return response()->json($marcas, 200);
     }
 
@@ -37,6 +37,21 @@ class MarcaController extends Controller
      */
     public function store(Request $request)
     {
+        // regras de validação
+        $regras = [
+            'nome' => 'required|unique:marcas',
+            'imagem' => 'required'
+        ];
+
+        // mensagens de feedback
+        $feedback = [
+            'required' => 'O campo :attribute é obrigatório',
+            'nome.unique' => 'O nome da marca já existe'
+        ];
+
+        // trabalhando com APIs, a validação é diferente e precisa ser feita também no client->(navegador, aplicação, postman) que deve enviar nos Headers uma Key 'Accept' com valor 'application/json'
+        // sem esse ajuste, o laravel encaminha para a rota padrão stateless e não vai retornar os feedbacks 
+        $request->validate($regras, $feedback);
 
         $marca = $this->marca->create($request->all());
 
