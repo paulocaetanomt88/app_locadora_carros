@@ -37,21 +37,11 @@ class MarcaController extends Controller
      */
     public function store(Request $request)
     {
-        // regras de validação
-        $regras = [
-            'nome' => 'required|unique:marcas',
-            'imagem' => 'required'
-        ];
-
-        // mensagens de feedback
-        $feedback = [
-            'required' => 'O campo :attribute é obrigatório',
-            'nome.unique' => 'O nome da marca já existe'
-        ];
+        // regras de validação foram movidas para os métodos rules() e feedback() na model Marca
 
         // trabalhando com APIs, a validação é diferente e precisa ser feita também no client->(navegador, aplicação, postman) que deve enviar nos Headers uma Key 'Accept' com valor 'application/json'
-        // sem esse ajuste, o laravel encaminha para a rota padrão stateless e não vai retornar os feedbacks 
-        $request->validate($regras, $feedback);
+        // sem esse ajuste, o laravel encaminha para a rota padrão stateless e não vai retornar os feedbacks
+        $request->validate($this->marca->rules(), $this->marca->feedback());
 
         $marca = $this->marca->create($request->all());
 
