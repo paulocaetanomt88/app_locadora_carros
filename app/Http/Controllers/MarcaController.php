@@ -51,6 +51,13 @@ class MarcaController extends Controller
     public function show($id)
     {
         $marca = $this->marca->find($id);
+
+        // Controle de fluxo para não mostrar apenas um retorno vazio ou null caso não for encontrado o $id da marca no banco de dados
+        if ($marca === null) {
+            // retornando um array associativo, o Laravel converte automaticamente isso para JSON
+            return['erro' => 'Recurso não encontrado']; // -> isso retorna: { "erro": "Recurso não encontrado" }
+        }
+
         return $marca;
     }
 
@@ -67,6 +74,10 @@ class MarcaController extends Controller
         //$marca->update($request->all());
         $marca = $this->marca->find($id);
 
+        if ($marca === null) {
+            return ['erro' => 'Impossível realizar a atualização. O recurso solicitado não existe '];
+        }
+
         $marca->update($request->all());
 
         return $marca;
@@ -82,6 +93,11 @@ class MarcaController extends Controller
     {
         //$marca->delete();
         $marca = $this->marca->find($id);
+
+        if ($marca === null) {
+            return ['erro' => 'Impossível realizar a remoção. O recurso solicitado não existe.'];
+        }
+
         $marca->delete();
 
         return ['msg' => 'A marca foi removida com sucesso!'];
