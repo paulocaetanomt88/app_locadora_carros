@@ -7,7 +7,9 @@ use Illuminate\Http\Request;
 
 class MarcaController extends Controller
 {
+    // criando a propriedade marca de forma privada
     private $marca;
+
     // Criando o método construtor que é executado automaticamente quando um objeto de Marca é instanciado
     // indicando o nome da classe (Marca) na frente do parâmetro $marca, o próprio laravel faz a instância desse objeto do tipo Marca
     public function __construct(Marca $marca) {
@@ -23,23 +25,23 @@ class MarcaController extends Controller
     {
         //$marcas = Marca::all(); // apenas executando o método estático all()
         $marcas = $this->marca->all(); // trabalhando, de fato, com o objeto
-        return $marcas;
+        
+        return response()->json($marcas, 200);
     }
 
 
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * O método store espera Request $request que vem via POST
+     * e pelo método store, em caso de sucesso, o próprio Laravel retorna o status code 201 Created
      */
     public function store(Request $request)
     {
-        // $marca = Marca::create($request->all());
+
         $marca = $this->marca->create($request->all());
 
-        return $marca;
+        // para evitar confusão, podemos explicitar o status code usando o helper response() passando o status code 201
+        return response()->json($marca, 201);
     }
 
     /**
@@ -54,11 +56,13 @@ class MarcaController extends Controller
 
         // Controle de fluxo para não mostrar apenas um retorno vazio ou null caso não for encontrado o $id da marca no banco de dados
         if ($marca === null) {
-            // retornando um array associativo, o Laravel converte automaticamente isso para JSON
-            return['erro' => 'Recurso não encontrado']; // -> isso retorna: { "erro": "Recurso não encontrado" }
+            // retornando o helper response() para informar o status code. Sem isso, mesmo não encontrando o recurso, seu status code seria "Status: 200 OK"
+            // dessa forma fica mais semântico porque isso indica para o client (navegador ou outro software) que a requisição chegou com sucesso ao webservice REST mas do lado do backend não foi encontrado
+            // possibilitando ao frontend exibir uma resposta personalizada mais adequada ao usuário
+            return response()->json(['erro' => 'Recurso não encontrado'], 404); // -> isso retorna: { "erro": "Recurso não encontrado" }
         }
 
-        return $marca;
+        return response()->json($marca, 200);
     }
 
     /**
@@ -71,16 +75,16 @@ class MarcaController extends Controller
     public function update(Request $request, $id)
     {
 
-        //$marca->update($request->all());
+        //injetando o método da model Marca no controller MarcaController
         $marca = $this->marca->find($id);
 
         if ($marca === null) {
-            return ['erro' => 'Impossível realizar a atualização. O recurso solicitado não existe '];
+            return response()->json(['erro' => 'Impossível realizar a atualização. O recurso solicitado não existe '], 404);
         }
 
         $marca->update($request->all());
 
-        return $marca;
+        return response()->json($marca, 200);
     }
 
     /**
@@ -95,11 +99,11 @@ class MarcaController extends Controller
         $marca = $this->marca->find($id);
 
         if ($marca === null) {
-            return ['erro' => 'Impossível realizar a remoção. O recurso solicitado não existe.'];
+            return response()->json(['erro' => 'Impossível realizar a remoção. O recurso solicitado não existe '], 404);
         }
 
         $marca->delete();
 
-        return ['msg' => 'A marca foi removida com sucesso!'];
+        return response()->json(['msg' => 'A marca foi removida com sucesso!'], 200);
     }
 }
