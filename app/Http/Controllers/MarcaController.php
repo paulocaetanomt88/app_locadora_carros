@@ -40,6 +40,7 @@ class MarcaController extends Controller
         // regras de validação foram movidas para os métodos rules() e feedback() na model Marca
 
         // trabalhando com APIs, a validação é diferente e precisa ser feita também no client->(navegador, aplicação, postman) que deve enviar nos Headers uma Key 'Accept' com valor 'application/json'
+        // com esse ajuste o client indica ao laravel que sabe lidar com o retorno em json
         // sem esse ajuste, o laravel encaminha para a rota padrão stateless e não vai retornar os feedbacks
         $request->validate($this->marca->rules(), $this->marca->feedback());
 
@@ -86,6 +87,9 @@ class MarcaController extends Controller
         if ($marca === null) {
             return response()->json(['erro' => 'Impossível realizar a atualização. O recurso solicitado não existe '], 404);
         }
+
+        // aplicando a validação usando os métodos dá model Marca
+        $request->validate($marca->rules(), $marca->feedback());
 
         $marca->update($request->all());
 
