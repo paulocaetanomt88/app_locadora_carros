@@ -43,11 +43,20 @@ class MarcaController extends Controller
         // com esse ajuste o client indica ao laravel que sabe lidar com o retorno em json
         // sem esse ajuste, o laravel encaminha para a rota padrão stateless e não vai retornar os feedbacks
         $request->validate($this->marca->rules(), $this->marca->feedback());
+        
+        // Formas de acessar um input
+        // acessando o input imagem
+        $image = $request->file('imagem');
 
-        $marca = $this->marca->create($request->all());
+        // Armazena a imagem recebida dentro do diretório imagens, e o nome do arquivo será um valor único baseado no instante em que foi recebido 
+        $image->store('imagens', 'public');   
+        
+        dd('Upload realizado? confira no diretorio de arquivos da aplicação'); // storage\app\imagens
+
+        //$marca = $this->marca->create($request->all());
 
         // para evitar confusão, podemos explicitar o status code usando o helper response() passando o status code 201
-        return response()->json($marca, 201);
+        //return response()->json($marca, 201);
     }
 
     /**
