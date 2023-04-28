@@ -37,26 +37,21 @@ class MarcaController extends Controller
      */
     public function store(Request $request)
     {
-        // regras de validação foram movidas para os métodos rules() e feedback() na model Marca
-
-        // trabalhando com APIs, a validação é diferente e precisa ser feita também no client->(navegador, aplicação, postman) que deve enviar nos Headers uma Key 'Accept' com valor 'application/json'
-        // com esse ajuste o client indica ao laravel que sabe lidar com o retorno em json
-        // sem esse ajuste, o laravel encaminha para a rota padrão stateless e não vai retornar os feedbacks
         $request->validate($this->marca->rules(), $this->marca->feedback());
-        
-        // Formas de acessar um input
-        // acessando o input imagem
+
         $image = $request->file('imagem');
 
-        // Armazena a imagem recebida dentro do diretório imagens, e o nome do arquivo será um valor único baseado no instante em que foi recebido 
-        $image->store('imagens', 'public');   
-        
-        dd('Upload realizado? confira no diretorio de arquivos da aplicação'); // storage\app\imagens
+        // quando o método store de request do tipo file é executado, seu retorno é o caminho (diretório + / + nome do arquivo gerado + .png)
+        $imagem_urn = $image->store('imagens', 'public');
 
-        //$marca = $this->marca->create($request->all());
+        //dd($imagem_urn); // storage\app\imagens
 
-        // para evitar confusão, podemos explicitar o status code usando o helper response() passando o status code 201
-        //return response()->json($marca, 201);
+        $marca = $this->marca->create([
+            'nome' => $request->nome,
+            'imagem' => $imagem_urn
+        ]);
+
+        return response()->json($marca, 201);
     }
 
     /**
@@ -71,9 +66,7 @@ class MarcaController extends Controller
 
         // Controle de fluxo para não mostrar apenas um retorno vazio ou null caso não for encontrado o $id da marca no banco de dados
         if ($marca === null) {
-            // retornando o helper response() para informar o status code. Sem isso, mesmo não encontrando o recurso, seu status code seria "Status: 200 OK"
-            // dessa forma fica mais semântico porque isso indica para o client (navegador ou outro software) que a requisição chegou com sucesso ao webservice REST mas do lado do backend não foi encontrado
-            // possibilitando ao frontend exibir uma resposta personalizada mais adequada ao usuário
+
             return response()->json(['erro' => 'Recurso não encontrado'], 404); // -> isso retorna: { "erro": "Recurso não encontrado" }
         }
 
@@ -102,16 +95,13 @@ class MarcaController extends Controller
 
             // percorrendo todas as regras definidas no Model
             foreach($marca->rules() as $input => $regra) {
-                // pegar apenas as regras aplicáveis aos parâmetros parciais da requisição PATCH
-                // Exemplo: existe o input 'imagem' dentro do array retornado por $request->all() ?
+
                 if (array_key_exists($input, $request->all())) {
                     // se existir, ...
                     $regrasDinamicas[$input] = $regra;
                 }
             }
-            
-            // se dentro de $request tiver recebido apenas 1 campo (ex: nome), a validação vai ser feita de acordo
-            // com as regras definidas para este campo no método rules() na model Marca
+
             $request->validate($regrasDinamicas, $marca->feedback());;
         } else {
             // aplicando a validação usando os métodos dá model Marca
