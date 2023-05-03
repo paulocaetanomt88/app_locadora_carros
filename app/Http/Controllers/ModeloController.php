@@ -40,6 +40,11 @@ class ModeloController extends Controller
             $modelos = $this->modelo;
         }
 
+        if ($request->has('filtro')) {
+           $condicoes = explode(':', $request->filtro);
+           $modelos = $modelos->where($condicoes[0], $condicoes[1], $condicoes[2]);
+        }
+
         if ($request->has('atributos_marca')) {
             // Filtrando atributos da Marca
             $atributos_marca = $request->atributos_marca;
