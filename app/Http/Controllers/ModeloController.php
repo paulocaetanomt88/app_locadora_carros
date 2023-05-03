@@ -26,6 +26,8 @@ class ModeloController extends Controller
 
         $modelos = array();
 
+        
+
         if ($request->has('atributos')) {
             $atributos = $request->atributos; // retorna valor semelhante a "id,nome,imagem", ou seja, os atributos estão juntos em uma string só
             
@@ -33,9 +35,19 @@ class ModeloController extends Controller
             // por isso usamos selectRaw que aceita string nesse formato "id,nome,imagem"
             // para recuperar, também, o relacionamento com Marca, precisamos passar o id da marca (marca_id).
             // Exemplo: http://127.0.0.1:8000/api/modelo?atributos=id,nome,lugares,marca_id
-            $modelos = $this->modelo->selectRaw($atributos)->with('marca')->get();
+            $modelos = $this->modelo->selectRaw($atributos);
         } else {
-            $modelos = $this->modelo->with('marca')->get();
+            $modelos = $this->modelo;
+        }
+
+        if ($request->has('atributos_marca')) {
+            // Filtrando atributos da Marca
+            $atributos_marca = $request->atributos_marca;
+
+            // A instrução ->with() permite que seja passado a 'relação: coluna1, coluna2, coluna 3...' para filtrar e trazer apenas campos específicos
+            $modelos = $modelos->with('marca:id,'.$atributos_marca)->get();
+        } else {
+            $modelos = $modelos->with('marca')->get();
         }
 
         // utilizando o relacionamento (método marca da model Modelo), e precisamos usar o método get() ao invés de all()
