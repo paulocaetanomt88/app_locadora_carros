@@ -20,14 +20,28 @@ class ModeloController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        // return response()->json($this->modelo->all(), 200);
+        //dd($request->get('atributos')); // "id,nome,imagem"
+
+        $modelos = array();
+
+        if ($request->has('atributos')) {
+            $atributos = $request->atributos; // retorna valor semelhante a "id,nome,imagem", ou seja, os atributos estão juntos em uma string só
+            
+            // select() espera por valores como 'id', 'nome', 'imagem'
+            // por isso usamos selectRaw que aceita string nesse formato "id,nome,imagem"
+            // para recuperar, também, o relacionamento com Marca, precisamos passar o id da marca (marca_id).
+            // Exemplo: http://127.0.0.1:8000/api/modelo?atributos=id,nome,lugares,marca_id
+            $modelos = $this->modelo->selectRaw($atributos)->with('marca')->get();
+        } else {
+            $modelos = $this->modelo->with('marca')->get();
+        }
 
         // utilizando o relacionamento (método marca da model Modelo), e precisamos usar o método get() ao invés de all()
         // all() -> criando um objeto de consulta + get() = collection
         // get() -> modificar a consulta -> collection
-        return response()->json($this->modelo->with('marca')->get(), 200);
+        return response()->json($modelos, 200);
     }
 
 
