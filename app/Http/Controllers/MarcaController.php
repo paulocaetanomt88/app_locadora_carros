@@ -43,7 +43,7 @@ class MarcaController extends Controller
         $image = $request->file('imagem');
 
         // quando o método store de request do tipo file é executado, seu retorno é o caminho (diretório + / + nome do arquivo gerado + .png)
-        $imagem_urn = $image->store('imagens', 'public');
+        $imagem_urn = $image->store('imagens/marcas', 'public');
 
         $marca = $this->marca->create([
             'nome' => $request->nome,
@@ -101,9 +101,7 @@ class MarcaController extends Controller
 
             $request->validate($regrasDinamicas, $marca->feedback());
 
-            if($request->file('imagem')) {
-                Storage::disk('public')->delete($marca->imagem);
-            }
+            
 
             // percorrendo os inputs vindos em $request->all()
             foreach($request->all() as $input => $valor) {
@@ -113,16 +111,22 @@ class MarcaController extends Controller
                         $imagem = $request->file($input);
 
                         if ($imagem != null) {
-                            $imagem_urn = $imagem->store('imagens', 'public');
+                            // remove a imagem antiga
+                            Storage::disk('public')->delete($marca->imagem);
+
+                            // armazena a imagem nova
+                            $imagem_urn = $imagem->store('imagens/marcas', 'public');
+
+                            // atualiza o path da imagem na tabela Marcas no banco de dados
                             $marca->update([
                                 'imagem' => $imagem_urn
                             ]);
                         }
+                    } else {
+                        $marca->update([
+                            $input => $valor,
+                        ]);
                     }
-
-                    $marca->update([
-                        $input => $valor,
-                    ]);
                 }
             }
         }
@@ -135,7 +139,7 @@ class MarcaController extends Controller
             }
 
             $imagem = $request->file('imagem');
-            $imagem_urn = $imagem->store('imagens', 'public');
+            $imagem_urn = $imagem->store('imagens/marcas', 'public');
 
             $marca->update([
                 'nome' => $request->nome,
