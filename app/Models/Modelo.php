@@ -33,4 +33,9 @@ class Modelo extends Model
             'boolean' => 'O campo :attribute deve ser do tipo boleano'
         ];
     }
+
+    // Relacionamento: Modelo pertence a uma Marca
+    public function marca() {
+        return $this->belongsTo('App\Models\Marca');
+    }
 }

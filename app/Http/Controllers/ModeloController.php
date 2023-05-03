@@ -22,7 +22,12 @@ class ModeloController extends Controller
      */
     public function index()
     {
-        return response()->json($this->modelo->all(), 200);
+        // return response()->json($this->modelo->all(), 200);
+
+        // utilizando o relacionamento (método marca da model Modelo), e precisamos usar o método get() ao invés de all()
+        // all() -> criando um objeto de consulta + get() = collection
+        // get() -> modificar a consulta -> collection
+        return response()->json($this->modelo->with('marca')->get(), 200);
     }
 
 
@@ -62,7 +67,7 @@ class ModeloController extends Controller
      */
     public function show($id)
     {
-        $modelo = $this->modelo->find($id);
+        $modelo = $this->modelo->with('marca')->find($id);
 
         // Controle de fluxo para não mostrar apenas um retorno vazio ou null caso não for encontrado o $id da marca no banco de dados
         if ($modelo === null) {
@@ -162,7 +167,7 @@ class ModeloController extends Controller
     {
         $modelo = $this->modelo->find($id);
 
-        if($modelo == null) {
+        if ($modelo == null) {
             return response()->json(['erro' => 'Impossível realizar a exclusão. O recurso não existe.'], 404);
         }
 

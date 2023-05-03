@@ -61,7 +61,8 @@ class MarcaController extends Controller
      */
     public function show($id)
     {
-        $marca = $this->marca->find($id);
+        // carrega a marca de acordo com o id recebido junto com os modelos que pertencem a esta marca
+        $marca = $this->marca->with('modelos')->find($id);
 
         // Controle de fluxo para não mostrar apenas um retorno vazio ou null caso não for encontrado o $id da marca no banco de dados
         if ($marca === null) {
@@ -101,7 +102,7 @@ class MarcaController extends Controller
 
             $request->validate($regrasDinamicas, $marca->feedback());
 
-            
+
 
             // percorrendo os inputs vindos em $request->all()
             foreach($request->all() as $input => $valor) {
@@ -166,7 +167,7 @@ class MarcaController extends Controller
         if ($marca === null) {
             return response()->json(['erro' => 'Impossível realizar a remoção. O recurso solicitado não existe '], 404);
         }
-        
+
 
         Storage::disk('public')->delete($marca->imagem);
 
