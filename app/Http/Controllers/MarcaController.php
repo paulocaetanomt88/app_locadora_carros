@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Storage;
 use App\Models\Marca;
 use Illuminate\Http\Request;
 
@@ -44,8 +45,6 @@ class MarcaController extends Controller
         // quando o método store de request do tipo file é executado, seu retorno é o caminho (diretório + / + nome do arquivo gerado + .png)
         $imagem_urn = $image->store('imagens', 'public');
 
-        //dd($imagem_urn); // storage\app\imagens
-
         $marca = $this->marca->create([
             'nome' => $request->nome,
             'imagem' => $imagem_urn
@@ -82,7 +81,6 @@ class MarcaController extends Controller
      */
     public function update(Request $request, $id)
     {
-
         //injetando o método da model Marca no controller MarcaController
         $marca = $this->marca->find($id);
 
@@ -97,18 +95,55 @@ class MarcaController extends Controller
             foreach($marca->rules() as $input => $regra) {
 
                 if (array_key_exists($input, $request->all())) {
-                    // se existir, ...
                     $regrasDinamicas[$input] = $regra;
                 }
             }
 
-            $request->validate($regrasDinamicas, $marca->feedback());;
-        } else {
-            // aplicando a validação usando os métodos dá model Marca
-            $request->validate($marca->rules(), $marca->feedback());
+            $request->validate($regrasDinamicas, $marca->feedback());
+
+            if($request->file('imagem')) {
+                Storage::disk('public')->delete($marca->imagem);
+            }
+
+            // percorrendo os inputs vindos em $request->all()
+            foreach($request->all() as $input => $valor) {
+
+                if ($input != null && $input != '_method') {
+                    if ($request->hasFile($input)) {
+                        $imagem = $request->file($input);
+
+                        if ($imagem != null) {
+                            $imagem_urn = $imagem->store('imagens', 'public');
+                            $marca->update([
+                                'imagem' => $imagem_urn
+                            ]);
+                        }
+                    }
+
+                    $marca->update([
+                        $input => $valor,
+                    ]);
+                }
+            }
         }
 
-        $marca->update($request->all());
+        if($request->method() === 'PUT') {
+            $request->validate($this->marca->rules(), $marca->feedback());
+
+            if($request->file('imagem')) {
+                Storage::disk('public')->delete($marca->imagem);
+            }
+
+            $imagem = $request->file('imagem');
+            $imagem_urn = $imagem->store('imagens', 'public');
+
+            $marca->update([
+                'nome' => $request->nome,
+                'imagem' => $imagem_urn
+            ]);
+        }
+
+
 
         return response()->json($marca, 200);
     }
@@ -127,6 +162,10 @@ class MarcaController extends Controller
         if ($marca === null) {
             return response()->json(['erro' => 'Impossível realizar a remoção. O recurso solicitado não existe '], 404);
         }
+        
+
+        Storage::disk('public')->delete($marca->imagem);
+
 
         $marca->delete();
 
