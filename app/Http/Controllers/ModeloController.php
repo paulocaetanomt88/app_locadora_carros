@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Modelo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use App\Repositories\ModeloRepository;
 
 class ModeloController extends Controller
 {
@@ -22,48 +23,29 @@ class ModeloController extends Controller
      */
     public function index(Request $request)
     {
-        //dd($request->get('atributos')); // "id,nome,imagem"
+        $modeloRepository = new ModeloRepository($this->modelo);
 
-        $modelos = array();
-
-        
-
-        if ($request->has('atributos')) {
-            $atributos = $request->atributos; // retorna valor semelhante a "id,nome,imagem", ou seja, os atributos estão juntos em uma string só
-            
-            // select() espera por valores como 'id', 'nome', 'imagem'
-            // por isso usamos selectRaw que aceita string nesse formato "id,nome,imagem"
-            // para recuperar, também, o relacionamento com Marca, precisamos passar o id da marca (marca_id).
-            // Exemplo: http://127.0.0.1:8000/api/modelo?atributos=id,nome,lugares,marca_id
-            $modelos = $this->modelo->selectRaw($atributos);
-        } else {
-            $modelos = $this->modelo;
-        }
-
-        if ($request->has('filtro')) {
-
-            $filtros = explode(';', $request->filtro);
-
-            foreach($filtros as $key => $condicao) {
-                $c = explode(':', $condicao);
-                $modelos = $modelos->where($c[0], $c[1], $c[2]);
-            }
-        }
-
+        // aplica o método with() para pegar apenas os atributos selecionados se a requisição conter 'atributos_marca', senão traz todos os dados da marca deste modelo
         if ($request->has('atributos_marca')) {
-            // Filtrando atributos da Marca
-            $atributos_marca = $request->atributos_marca;
+            $atributos_marca = 'marca:id,' . $request->atributos_marca;
 
-            // A instrução ->with() permite que seja passado a 'relação: coluna1, coluna2, coluna 3...' para filtrar e trazer apenas campos específicos
-            $modelos = $modelos->with('marca:id,'.$atributos_marca)->get();
+            $modeloRepository->selectAtributosRegistrosRelacionados($atributos_marca);
         } else {
-            $modelos = $modelos->with('marca')->get();
+            $modeloRepository->selectAtributosRegistrosRelacionados('marca');
         }
 
-        // utilizando o relacionamento (método marca da model Modelo), e precisamos usar o método get() ao invés de all()
-        // all() -> criando um objeto de consulta + get() = collection
-        // get() -> modificar a consulta -> collection
-        return response()->json($modelos, 200);
+        // aplica o método where() passando as condições para retorno (ou não) dos registros se a requisição conter 'filtro'
+        if ($request->has('filtro')) {
+            $modeloRepository->filtro($request->filtro);
+        }
+
+        // aplica o método select() para selecionar apenas os atributos especificados se a requisição conter 'atributos'
+        if ($request->has('atributos')) {
+            $modeloRepository->selectAtributos($request->atributos);
+        }
+
+        // return response()->json($this->marca->get(), 200);
+        return response()->json($modeloRepository->getResultado(), 200);
     }
 
 
