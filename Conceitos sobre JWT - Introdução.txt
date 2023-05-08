@@ -50,4 +50,16 @@ Signature: assinatura
 
 O token precisa estar presente em todas as requsições feitas por client porque cada requisição é única e totalmente independente em relação à requisição anterior. 
 
+Para instalar o JWT Auth no projeto laravel execute o comando dentro da raiz do projeto:
+composer require tymon/jwt-auth "1.0.2"
+* o tymon/jwt-auth não é o único utilizado para este propósito. Mas utilizarei para estar em conformidade com o projeto do curso.
+
+Para configurar o JWT após sua instalação é preciso:
+1 - importar o provider do JWT em config/app.php dentro de 'providers' => [ ... , Tymon\JWTAuth\Providers\LaravelServiceProvider::class, ] 
+// mantendo a vírgula no final
+
+2 - publicar a configuração com o comando: php artisan vendor:publish --provider="Tymon\JWTAuth\Providers\LaravelServiceProvider"
+
+3 - Criar a chave secreta do JWT dentro do arquivo .env na raiz do projeto com o comando: php artisan jwt:secret // este e outros comandos só é possível após a instalação do JWT Auth
+
 
