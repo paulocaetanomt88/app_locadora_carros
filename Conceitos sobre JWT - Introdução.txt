@@ -1,0 +1,53 @@
+INTRODUÇÃO AO JWT - JSON WEB TOKEN
+Nesta aula eu estudei sobre o processo de autenticação por usuário e senha e autorização por meio de tokens em uma API Web Service Rest
+
+* Autenticação e Autorização são coisas diferentes
+
+Quando estamos trabalhando em uma API Web Service Rest é importante lembrarmos que cada requisição é única. 
+Cada requisição é uma transação independente sem nenhum tipo de relação com qualquer requisição anterior.
+Esse conceito é conhecido como protocolo    sem estado (stateless).
+
+Lembrando: em aplicações web convencionais, que não é o casso nessa seção, é normal armazenarmos o estado da sessão,
+ou seja, das requisições feitas pelo cliente ao servidor.
+
+Esse armazenamento é feito pela superglobal $_SESSION do PHP. Quando o estado da seção é preservado do lado do backend, é possível recuperar esse estado
+em requisições futuras.
+Essa capacidade de recuperar o estado por meio da superglobal $_SESSION em requisições futuras feitas por um cliente específico ao servidor da aplicação não existe
+quando estamos falando de uma API Web service Rest. 
+E é justamente neste ponto que entra em cena os tokens de autorização.
+Repare que de qualquer forma nós precisamos de um processo de autenticação, ou seja, de uma forma ou método de garantir que o cliente que está fazendo uma requisição
+é quem de fato ele diz ser.
+
+No nosso caso, assim como na maioria esmagadora das aplicações, o método de autenticação utilizado é por meio de usuário e senha.
+Aqui, essa conduta de autenticação continua sendo feita da mesma forma.
+Então, quando um cliente quer se conectar em uma API Web service Rest:
+o cliente encaminha o usuário e senha -> o web service realiza a autenticação e gera um token de autorização -> o token é armazenado no BD (do lado do backend)
+e é encaminhado na resposta (response) para o cliente. 
+De modo que o cliente vai armazenar esse token para utilizá-lo em todas as requisições futuras.
+
+Por quê? Justamente porque as requisições feitas para uma API Web service Rest não preserva o estado. 
+Logo, por meio de um processo de autenticação que utilizou usuário e senha nós validamos a existencia desse usuário e disponibilizamos pra ele um token de autorização.
+E aí sim, devolvendo esse token pra requisições futuras o cliente vai poder anexar esse token na requisição pra ter acesso as rotas protegidas.
+
+Por isso que é importante ter em mente que autenticação é diferente de autorização. Nós utilizamos um método de autenticação pra termos um certo nível de segurança 
+pra dizer que o cliente é quem ele diz ser.
+Mas como não guardamos o estado dessa requisição (essa informação não foi armazenada na superglobal $_SESSION para indicar que aquele cliente fez uma autenticação com sucesso),
+nós precisamos de alguma forma autorizar aquele cliente a fazer requisições para rotas protegidas de nossa aplicação).
+Para fazer isso nós precisamos desse token de autorização. Então, a autenticação é feita uma única vez e o token é gerado para ser usado em requisições futuras.
+
+Quando esse token é inabilitado ou alcança um número x de requisições a um tempo limite ele fica expirado,
+então o cliente precisa fazer uma nova autenticação para receber uma nova autorização (token).
+
+A aplicação API Web service Rest vai ter a inteligência de verificar se o bearer (portador da requisição) possui um token válido, se sim, as rotas protegidas serão liberadas.
+
+
+O token JWT (Json Web Token) é constituído por três partes:
+Header: cabeçalho
+Payload: carga útil ou conteúdo
+Signature: assinatura
+
+* Observação: o processo de autorização para obter um token pode ser feito OU NÃO por um processo de autenticação prévia com usuário e senha.
+
+O token precisa estar presente em todas as requsições feitas por client porque cada requisição é única e totalmente independente em relação à requisição anterior. 
+
+
