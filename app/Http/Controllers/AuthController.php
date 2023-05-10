@@ -19,20 +19,23 @@ class AuthController extends Controller
         } else { // erro de usuário ou senha
             return response()->json(['erro' => 'Usuário ou senha inválido'], 403); // 403 -> forbidden -> proibido
         }
-        
+
         // retornar um Json Web Token
         return 'login';
     }
 
     public function logout() {
-        return 'logout';
+        auth('api')->logout();
+        return response()->json(['msg' => 'Logout foi realizdo com sucesso.']);
     }
 
     public function refresh() {
-        return 'refresh';
+        $token = auth('api')->refresh();
+
+        return response()->json(['token' => $token]);
     }
 
     public function me() {
-        return 'me';
+       return response()->json(auth()->user());
     }
 }
