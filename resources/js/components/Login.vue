@@ -3,11 +3,11 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header">Login (Component Vue)</div>
+                    <div class="card-header">Login </div>
 
                     <div class="card-body">
-                        <form method="POST" action="">
-
+                        <form method="POST" action="" @submit.prevent="login($event)">
+                            <input type="hidden" name="_token" :value="csrf_token">
                             <div class="form-group row">
                                 <label
                                     for="email"
@@ -25,6 +25,7 @@
                                         required
                                         autocomplete="email"
                                         autofocus
+                                        v-model="email"
                                     />
 
                                 </div>
@@ -45,6 +46,7 @@
                                         name="password"
                                         required
                                         autocomplete="current-password"
+                                        v-model="password"
                                     />
 
                                 </div>
@@ -90,4 +92,38 @@
     </div>
 </template>
 
-<script></script>
+<script>
+    export default {
+        props: ['csrf_token'],
+        // implementando o data na forma de método
+        data() {
+            // retornando um objeto literal que vai criar os atributos na instância do Vue
+            return {
+                email: '',
+                password: ''
+            }
+        },
+        methods: {
+            login(e) {
+                let url = 'http://localhost:8000/api/login'
+                let configuracao = {
+                    method: 'post',
+                    body: new URLSearchParams({
+                            'email': this.email,
+                            'password': this.password
+                    })
+                }
+
+                fetch(url, configuracao) // por meio do fetch é possível fazer requisições http
+                    .then(response => response.json()) // o próximo .then() recebe o retorno do anterior
+                    .then(data => {
+                        if (data.token) {
+                            document.cookie = 'token='+data.token+';SameSite=Lax'
+                        }
+
+                        e.target.submit()
+                    })
+            }
+        }
+    }
+</script>
