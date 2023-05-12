@@ -55,7 +55,7 @@
             <table-component></table-component>
           </template>
           <template v-slot:rodape>
-            <button type="button" class="btn btn-primary btn-sm float-right">
+            <button type="button" class="btn btn-primary btn-sm float-right" data-toggle="modal" data-target="#modalMarca">
               Adicionar
             </button>
           </template>
@@ -63,6 +63,7 @@
         <!-- Fim do card de listagem de marcas -->
       </div>
     </div>
+    <modal-component id="modalMarca" titulo="Adicionar marca"></modal-component>
   </div>
 </template>
 
