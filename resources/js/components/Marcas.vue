@@ -83,6 +83,7 @@
             id="novoNome"
             aria-describedby="novoNomeHelp"
             placeholder="Nome da marca"
+            v-model="nomeMarca"
           />
         </input-container-component>
       </div>
@@ -99,6 +100,7 @@
             id="novoImagem"
             aria-describedby="novoImagemHelp"
             placeholder="Selecione uma imagem"
+            @change="carregarImagem($event)"
           />
         </input-container-component>
       </div>
@@ -107,12 +109,62 @@
         <button type="button" class="btn btn-secondary" data-dismiss="modal">
             Fechar
           </button>
-        <button type="button" class="btn btn-primary">Salvar</button>
+        <button type="button" class="btn btn-primary" @click="salvar()">Salvar</button>
       </template>
     </modal-component>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+    computed: {
+            token() {
+                let token = document.cookie.split(';').find(indice => {
+                    return indice.includes('token=')
+                })
+
+                token = token.split('=')[1]
+                token = 'Bearer ' + token
+
+                return token
+            }
+        },
+    data() {
+        return {
+            urlBase: 'http://localhost:8000/api/v1/marca',
+            nomeMarca: '',
+            arquivoImagem: []
+        }
+    },
+    methods: {
+        
+        carregarImagem(e) {
+            this.arquivoImagem = e.target.files
+        },
+        salvar() {
+            // instanciando um formulário para que seja possível definir os seus atributos
+            let formData = new FormData();
+            formData.append('nome', this.nomeMarca)
+            formData.append('imagem', this.arquivoImagem[0])
+
+            // configuraçao do tipo de formulário e os headers
+            let config = {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    'Accept': 'application/json',
+                    'Authorization': this.token
+                }
+            }
+
+            // o método post do axios espera por três parâmetros: url, conteúdo e a configuração contendo os headers
+            axios.post(this.urlBase, formData, config)
+                .then(response => {
+                    console.log(response)
+                })
+                .catch(errors => {
+                    console.log(errors)
+                })
+        }
+    }
+};
 </script>
