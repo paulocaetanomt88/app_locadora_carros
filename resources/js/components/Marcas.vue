@@ -52,7 +52,10 @@
         <!-- Início do card de listagem de marcas -->
         <card-component titulo="Listagem de Marcas">
           <template v-slot:conteudo>
-            <table-component></table-component>
+            <table-component 
+                :dados="marcas"
+                :titulos="['ID', 'Nome', 'Imagem']"
+            ></table-component>
           </template>
           <template v-slot:rodape>
             <button
@@ -138,14 +141,38 @@ export default {
     data() {
         return {
             urlBase: 'http://localhost:8000/api/v1/marca',
+            config: {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    'Accept': 'application/json',
+                    'Authorization': this.token
+                }
+            },
             nomeMarca: '',
             arquivoImagem: [],
             transacaoStatus: '',
-            transacaoDetalhes: {}
+            transacaoDetalhes: {},
+            marcas: []
         }
     },
     methods: {
+        carregarLista() {
+            let config = {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    'Accept': 'application/json',
+                    'Authorization': this.token
+                }
+            }
 
+            axios.get(this.urlBase, config)
+                .then(response => {
+                    this.marcas = response.data
+                })
+                .catch(errors => {
+                    console.log(errors);
+                })
+        },
         carregarImagem(e) {
             this.arquivoImagem = e.target.files
         },
@@ -155,7 +182,6 @@ export default {
             formData.append('nome', this.nomeMarca)
             formData.append('imagem', this.arquivoImagem[0])
 
-            // configuraçao do tipo de formulário e os headers
             let config = {
                 headers: {
                     'Content-Type': 'multipart/form-data',
@@ -184,6 +210,9 @@ export default {
                   //  console.log(errors.response.data.message)
                 })
         }
+    },
+    mounted() {
+        this.carregarLista()
     }
 };
 </script>
