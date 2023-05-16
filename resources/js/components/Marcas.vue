@@ -52,8 +52,8 @@
         <!-- Início do card de listagem de marcas -->
         <card-component titulo="Listagem de Marcas">
           <template v-slot:conteudo>
-            <table-component 
-                :dados="marcas"
+            <table-component
+                :dados="marcas.data"
                 :titulos=" {
                     id: {titulo: 'ID', tipo: 'texto'},
                     nome: {titulo: 'Nome', tipo: 'texto'},
@@ -157,7 +157,7 @@ export default {
             arquivoImagem: [],
             transacaoStatus: '',
             transacaoDetalhes: {},
-            marcas: []
+            marcas: { data: [] }
         }
     },
     methods: {
@@ -211,7 +211,7 @@ export default {
                   this.transacaoDetalhes = {
                     mensagem: errors.response.data.message,
                     dados: errors.response.data.errors
-                  } 
+                  }
                   //  console.log(errors.response.data.message)
                 })
         }
