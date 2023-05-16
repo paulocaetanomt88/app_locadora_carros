@@ -19,6 +19,7 @@
                     id="inputId"
                     aria-describedby="idHelp"
                     placeholder="ID"
+                    v-model = "busca.id"
                   />
                 </input-container-component>
               </div>
@@ -36,13 +37,14 @@
                     id="inputNome"
                     aria-describedby="nomeHelp"
                     placeholder="Nome da marca"
+                    v-model = "busca.nome"
                   />
                 </input-container-component>
               </div>
             </div>
           </template>
           <template v-slot:rodape>
-            <button type="submit" class="btn btn-primary btn-sm float-right">
+            <button type="submit" class="btn btn-primary btn-sm float-right" @click="pesquisar()">
               Pesquisar
             </button>
           </template>
@@ -171,9 +173,26 @@ export default {
       transacaoStatus: "",
       transacaoDetalhes: {},
       marcas: { data: [] },
+      busca: { id: '', nome: '' }
     };
   },
   methods: {
+    pesquisar() {
+        console.log(this.busca)
+        let filtro = ''
+
+        for (let chave in this.busca) {
+            if(this.busca[chave]) {
+                if (filtro != '') {
+                    filtro += ';'
+                }
+                
+                filtro += chave + ':like:' + this.busca[chave]
+            }
+        }
+
+        console.log(filtro)
+    },
     paginacao(l) {
         if (l.url) {
             this.urlBase = l.url // ajustando a url com o parametro de página
