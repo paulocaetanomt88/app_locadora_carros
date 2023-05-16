@@ -26,6 +26,7 @@ export default {
   props: ["dados", 'titulos'],
   computed: {
     dadosFiltrados() {
+
         let campos = Object.keys(this.titulos)
         let dadosFiltrados = []
 
@@ -38,7 +39,7 @@ export default {
             dadosFiltrados.push(itemFiltrado)
         })
 
-        return dadosFiltrados 
+        return dadosFiltrados
     }
   }
 };
