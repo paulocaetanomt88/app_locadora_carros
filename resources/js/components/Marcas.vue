@@ -161,6 +161,8 @@ export default {
   data() {
     return {
       urlBase: "http://localhost:8000/api/v1/marca",
+      urlPaginacao: '',
+      urlFiltro: '',
       config: {
         headers: {
           "Content-Type": "multipart/form-data",
@@ -186,16 +188,24 @@ export default {
                 if (filtro != '') {
                     filtro += ';'
                 }
-                
+
                 filtro += chave + ':like:' + this.busca[chave]
             }
         }
+        
+        if (filtro != '') {
+            this.urlPaginacao = 'page=1'
+            this.urlFiltro = '&filtro='+filtro
+        } else {
+            this.urlFiltro = ''
+        }
 
-        console.log(filtro)
+        this.carregarLista()
     },
     paginacao(l) {
         if (l.url) {
-            this.urlBase = l.url // ajustando a url com o parametro de página
+            // this.urlBase = l.url // ajustando a url com o parametro de página
+            this.urlPaginacao = l.url.split('?')[1]
             this.carregarLista() // requisitando novamente os dados para nossa API
         }
     },
@@ -208,8 +218,11 @@ export default {
         },
       };
 
+      let url = this.urlBase + '?' + this.urlPaginacao + this.urlFiltro
+      console.log(url)
+
       axios
-        .get(this.urlBase, config)
+        .get(url, config)
         .then((response) => {
           this.marcas = response.data;
         })
