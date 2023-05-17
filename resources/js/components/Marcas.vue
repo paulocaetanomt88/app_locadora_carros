@@ -56,7 +56,7 @@
           <template v-slot:conteudo>
             <table-component
                 :dados="marcas.data"
-                :visualizar="true"
+                :visualizar="{ visivel: true, dataToggle: 'modal', dataTarget: '#modalMarcaVisualizar'}"
                 :atualizar="true"
                 :remover="true"
                 :titulos=" {
@@ -94,6 +94,8 @@
         <!-- Fim do card de listagem de marcas -->
       </div>
     </div>
+
+    <!-- Início do modal de inclusão de marca  -->
     <modal-component id="modalMarca" titulo="Adicionar marca">
 
       <template v-slot:alertas>
@@ -138,12 +140,23 @@
       </div>
       </template>
       <template v-slot:rodape>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">
-            Fechar
-          </button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
         <button type="button" class="btn btn-primary" @click="salvar()">Salvar</button>
       </template>
     </modal-component>
+    <!-- Fim do modal de inclusão de marca  -->
+
+    <!-- Início do modal de visualização de marca  -->
+    <modal-component id="modalMarcaVisualizar" titulo="Vizualizar marca">
+        <template v-slot:alertas></template>
+        <template v-slot:conteudo>
+            Conteúdo
+        </template>
+        <template v-slot:rodape>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+        </template>
+    </modal-component>
+    <!-- Fim do modal de visualização de marca  -->
   </div>
 </template>
 
@@ -195,7 +208,7 @@ export default {
                 filtro += chave + ':like:' + this.busca[chave]
             }
         }
-        
+
         if (filtro != '') {
             this.urlPaginacao = 'page=1'
             this.urlFiltro = '&filtro='+filtro
