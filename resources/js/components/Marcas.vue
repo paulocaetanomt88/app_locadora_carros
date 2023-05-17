@@ -309,7 +309,10 @@ export default {
         let formData = new FormData();
         formData.append('_method', 'patch')
         formData.append('nome', this.$store.state.item.nome)
-        formData.append('imagem', this.arquivoImagem[0])
+
+        if(this.arquivoImagem[0]) {
+            formData.append('imagem', this.arquivoImagem[0])
+        }
 
         let config = {
             headers: {
@@ -325,6 +328,7 @@ export default {
             .then(response => {
                 this.$store.state.transacao.status = 'sucesso'
                 this.$store.state.transacao.mensagem = response.data.msg
+                atualizarImagem.value = ''
                 this.carregarLista()
             })
             .catch(errors => {
@@ -402,7 +406,6 @@ export default {
       };
 
       let url = this.urlBase + '?' + this.urlPaginacao + this.urlFiltro
-      console.log(url)
 
       axios
         .get(url, config)
