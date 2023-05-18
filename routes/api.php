@@ -20,8 +20,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::prefix('v1')->middleware('jwt.auth')->group(function() {
+    // só terá acesso a esse grupo de rotas se possuir um token válido (jwt.auth)
     Route::post('me', 'AuthController@me');
-    Route::post('refresh', 'AuthController@refresh');
     Route::post('logout', 'AuthController@logout');
     Route::apiResource('cliente', 'ClienteController');
     Route::apiResource('carro', 'CarroController');
@@ -30,8 +30,8 @@ Route::prefix('v1')->middleware('jwt.auth')->group(function() {
     Route::apiResource('modelo', 'ModeloController');
 });
 
-
+// gera um novo token se obter sucesso na autenticação
 Route::post('login', 'AuthController@login');
 
-
-
+// renova o token
+Route::post('refresh', 'AuthController@refresh');

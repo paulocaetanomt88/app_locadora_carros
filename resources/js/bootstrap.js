@@ -55,10 +55,10 @@ axios.interceptors.request.use(
         let token = document.cookie.split(";").find((indice) => {
             return indice.includes("token=");
           });
-    
+
         token = token.split("=")[1];
         token = "Bearer " + token;
-    
+
         config.headers.Authorization = token // ou em forma de atributo de objeto
 
         console.log('Interceptando o request antes do envio', config)
@@ -80,9 +80,24 @@ axios.interceptors.response.use(
         console.log('Interceptando a resposta antes da aplicação', response)
         return response
     },
-    // tratar os erros caso aconteçam
+    // o segundo é para tratar os erros caso aconteçam
     error => {
-        console.log('Erro na resposta: ', error)
+        console.log('Erro na resposta: ', error.response)
+
+        if (error.response.status == 401 && error.response.data.message == "Token has expired") {
+            // Fazer uma nova requisição para rota refresh
+            // vamos passar tanto pelo interceptor do request quanto pelo interceptor deste mesmo response novamente
+            axios.post('http://localhost:8000/api/refresh')
+                .then(response => {
+                    // Se for feito refresh com sucesso, vai obter um response com um novo token
+                    // que será armazenado em document.cookie
+                    document.cookie = 'token='+response.data.token+';SameSite=Lax'
+
+                    // recarregando a página para o navegador refazer a requisição anterior
+                    window.location.reload()
+                })
+        }
+
         return Promise.reject(error)
     }
 )
