@@ -4,7 +4,7 @@
 #### seguindo as seções 17, 18 e 19 do curso de Desenvolvimento Web Avançado com PHP, Laravel e Vue.JS na plataforma Udemy
   
 
-<p>Na seção "17 - APIS, Web services e REST", serão abordados os tópicos:</p>
+### Seção "17 - APIS, Web services e REST", foram abordados os tópicos:
 <ul>
     <li>Criação das Models, Controllers e Migrations</li>
     <li>Configurar conexão com o banco de dados</li>
@@ -44,7 +44,25 @@
     <li>API WebService Rest para o Resource Cliente</li>
     <li>API WebService Rest para o Resource Locacoes</li>
 </ul>
-  
+#### Alguns prints de Funcionalidades da API:
+<p align="center">
+  <img src="prints/api/1-gerando-token-jwt.png" alt="Gerando o token JWT">
+</p>
+<p align="center">
+  <img src="prints/api/2-Listando-Marcas-sem-filtro.png" alt="Gerando o token JWT">
+</p>
+<p align="center">
+  <img src="prints/api/3-Filtrando-Marcas.png" alt="Gerando o token JWT">
+</p>
+<p align="center">
+  <img src="prints/api/4-Exibindo-Marca-por-ID.png" alt="Gerando o token JWT">
+</p>
+<p align="center">
+  <img src="prints/api/5-Atualizacao-parcial-Marca.png" alt="Gerando o token JWT">
+</p>
+<p align="center">
+  <img src="prints/api/6-Removendo-Marca.png" alt="Gerando o token JWT">
+</p>
 
 <p>Na seção "18 - Autenticação API com Autorização JWT (JSON Web Token)", serão abordados os tópicos:</p>
 <ul>
