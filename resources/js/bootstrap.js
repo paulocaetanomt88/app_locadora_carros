@@ -39,3 +39,37 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     forceTLS: true
 // });
+
+/*
+    !!! INTERCEPTAR OS REQUESTS DA APLICAÇÃO !!!
+    O método use espera 2 métodos de callback:
+        - O 1º método que vai definir as configurações da requisição antes que ela aconteça
+        - O 2º vai recuperar por parâmetro o erro caso aconteça, podendo retornar a Promise.reject do erro
+*/
+axios.interceptors.request.use(
+    config => {
+        console.log('Interceptando o request antes do envio', config)
+        return config
+    },
+    error => {
+        console.log('Erro na requisição: ', error)
+        return Promise.reject(error)
+    }
+)
+
+//   INTERCEPTAR OS RESPONSES DA APLICAÇÃO
+// Se uma requisição for feita com sucesso, esta vai retornar uma resposta
+// mas antes que esta resposta for absorvida por uma aplicação nós poderemos interceptar e tratar isso
+// aplicando lógicas que serão comuns pra todas essas respostas
+axios.interceptors.response.use(
+    // o primeiro método é para tratar a resposta recebida dessa requisição
+    response => {
+        console.log('Interceptando a resposta antes da aplicação', response)
+        return response
+    },
+    // tratar os erros caso aconteçam
+    error => {
+        console.log('Erro na resposta: ', error)
+        return Promise.reject(error)
+    }
+)
