@@ -63,23 +63,28 @@
     <li>Expirando o JWT por tempo limite</li>
 </ul>
 
- #### Alguns prints de Funcionalidades da API:
+#### Alguns prints de Funcionalidades da API:
 
 <p align="center">
   <img src="prints/api/1-gerando-token-jwt.png" alt="Gerando o token JWT">
 </p>
+
 <p align="center">
   <img src="prints/api/2-Listando-Marcas-sem-filtro.png" alt="Listando Marcas sem filtros">
 </p>
+
 <p align="center">
   <img src="prints/api/3-Filtrando-Marcas.png" alt="Filtrando Marcas por atributos">
 </p>
+
 <p align="center">
   <img src="prints/api/4-Exibindo-Marca-por-ID.png" alt="Exibindo registro específico de Marca por ID">
 </p>
+
 <p align="center">
   <img src="prints/api/5-Atualizacao-parcial-Marca.png" alt="Atualização de apenas 1 atributo de Marca usando o método PATCH">
 </p>
+
 <p align="center">
   <img src="prints/api/6-Removendo-Marca.png" alt="Removendo um registro específico de Marca por ID">
 </p>
