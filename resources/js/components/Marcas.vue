@@ -97,16 +97,16 @@
     <modal-component id="modalMarca" titulo="Adicionar marca">
       <template v-slot:alertas>
         <alert-component
-            tipo="success" 
-            :detalhes="transacaoDetalhes" 
-            titulo="A marca foi cadastrada com sucesso." 
+            tipo="success"
+            :detalhes="transacaoDetalhes"
+            titulo="A marca foi cadastrada com sucesso."
             v-if="transacaoStatus == 'adicionado'">
         </alert-component>
 
-        <alert-component 
-            tipo="danger" 
-            :detalhes="transacaoDetalhes" 
-            titulo="Erro ao tentar cadastrar a marca" 
+        <alert-component
+            tipo="danger"
+            :detalhes="transacaoDetalhes"
+            titulo="Erro ao tentar cadastrar a marca"
             v-if="transacaoStatus == 'erro'">
         </alert-component>
       </template>
@@ -180,10 +180,10 @@
     <!-- Início do modal de atualização de marca  -->
     <modal-component id="modalMarcaAtualizar" titulo="Atualizar marca">
       <template v-slot:alertas>
-        <alert-component 
+        <alert-component
                 tipo="success"
                 titulo="Transação realizada com sucesso"
-                :detalhes="$store.state.transacao" 
+                :detalhes="$store.state.transacao"
                 v-if="$store.state.transacao.status == 'sucesso'"
             ></alert-component>
             <alert-component
@@ -240,10 +240,10 @@
     <!-- Início do modal de remoção de marca  -->
     <modal-component id="modalMarcaRemover" titulo="Remover marca">
         <template v-slot:alertas>
-            <alert-component 
+            <alert-component
                 tipo="success"
                 titulo="Transação realizada com sucesso"
-                :detalhes="$store.state.transacao" 
+                :detalhes="$store.state.transacao"
                 v-if="$store.state.transacao.status == 'sucesso'"
             ></alert-component>
             <alert-component
@@ -327,13 +327,14 @@ export default {
         axios.post(url, formData, config)
             .then(response => {
                 this.$store.state.transacao.status = 'sucesso'
-                this.$store.state.transacao.mensagem = response.data.msg
+                this.$store.state.transacao.mensagem = 'O registro da marca foi atualizado com sucesso'
                 atualizarImagem.value = ''
                 this.carregarLista()
             })
             .catch(errors => {
                 this.$store.state.transacao.status = 'erro'
-                this.$store.state.transacao.mensagem = errors.response.data.erro
+                this.$store.state.transacao.mensagem = errors.response.data.message
+                this.$store.state.transacao.dados = errors.response.data.errors
             })
     },
     remover() {
