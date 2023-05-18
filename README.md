@@ -4,7 +4,7 @@
 #### seguindo as seções 17, 18 e 19 do curso de Desenvolvimento Web Avançado com PHP, Laravel e Vue.JS na plataforma Udemy
   
 
-### Seção "17 - APIS, Web services e REST", foram abordados os tópicos:
+### Seção "17 - APIS, Web services e REST"
 <ul>
     <li>Criação das Models, Controllers e Migrations</li>
     <li>Configurar conexão com o banco de dados</li>
@@ -44,27 +44,8 @@
     <li>API WebService Rest para o Resource Cliente</li>
     <li>API WebService Rest para o Resource Locacoes</li>
 </ul>
-#### Alguns prints de Funcionalidades da API:
-<p align="center">
-  <img src="prints/api/1-gerando-token-jwt.png" alt="Gerando o token JWT">
-</p>
-<p align="center">
-  <img src="prints/api/2-Listando-Marcas-sem-filtro.png" alt="Gerando o token JWT">
-</p>
-<p align="center">
-  <img src="prints/api/3-Filtrando-Marcas.png" alt="Gerando o token JWT">
-</p>
-<p align="center">
-  <img src="prints/api/4-Exibindo-Marca-por-ID.png" alt="Gerando o token JWT">
-</p>
-<p align="center">
-  <img src="prints/api/5-Atualizacao-parcial-Marca.png" alt="Gerando o token JWT">
-</p>
-<p align="center">
-  <img src="prints/api/6-Removendo-Marca.png" alt="Gerando o token JWT">
-</p>
 
-<p>Na seção "18 - Autenticação API com Autorização JWT (JSON Web Token)", serão abordados os tópicos:</p>
+### Seção "18 - Autenticação API com Autorização JWT (JSON Web Token)"
 <ul>
     <li>Introdução ao JWT (Json Web Token)</li>
     <li>Instalando o pacote JWT-Auth</li>
@@ -81,9 +62,29 @@
     <li>Anatomia do JWT (Json Web Token)</li>
     <li>Expirando o JWT por tempo limite</li>
 </ul>
-  
 
-<p>Na seção "19 - Aplicação Full Stack Back-end API Laravel com Front-end Vue.JS", serão abordados os tópicos:</p>
+ #### Alguns prints de Funcionalidades da API:
+
+<p align="center">
+  <img src="prints/api/1-gerando-token-jwt.png" alt="Gerando o token JWT">
+</p>
+<p align="center">
+  <img src="prints/api/2-Listando-Marcas-sem-filtro.png" alt="Listando Marcas sem filtros">
+</p>
+<p align="center">
+  <img src="prints/api/3-Filtrando-Marcas.png" alt="Filtrando Marcas por atributos">
+</p>
+<p align="center">
+  <img src="prints/api/4-Exibindo-Marca-por-ID.png" alt="Exibindo registro específico de Marca por ID">
+</p>
+<p align="center">
+  <img src="prints/api/5-Atualizacao-parcial-Marca.png" alt="Atualização de apenas 1 atributo de Marca usando o método PATCH">
+</p>
+<p align="center">
+  <img src="prints/api/6-Removendo-Marca.png" alt="Removendo um registro específico de Marca por ID">
+</p>
+
+### Seção "19 - Aplicação Full Stack Back-end API Laravel com Front-end Vue.JS"
 <ul>
     <li>Configurando o Vue.JS no Laravel</li>
     <li>Evitando erros com o projeto da seção</li>
@@ -129,7 +130,44 @@
     <li>Axios - Interceptando o response e realizando um auto refresh do JWT</li>
     <li>Considerações finais sobre a seção e o projeto prático</li>
 </ul>
-  
+ 
+
+ #### Alguns prints de Funcionalidades da Aplicação Front-end com Vue.js:
+
+<p align="center">
+  <img src="prints/1-Registro.png" alt="Registrando um usuário">
+</p>
+<p align="center">
+  <img src="prints/2-Login.png" alt="Autenticação de usuário">
+</p>
+<p align="center">
+  <img src="prints/3-Home-do-usuario-logado.png" alt="Home page do usuário logado">
+</p>
+<p align="center">
+  <img src="prints/4-Gerenciamento-de-Marcas.png" alt="Gerenciamento de Marcas cadastradas">
+</p>
+<p align="center">
+  <img src="prints/5-Busca-e-Listagem-de-Marcas.png" alt="Busca e Listagem de Marcas cadastradas">
+</p>
+<p align="center">
+  <img src="prints/6-Busca-Marca--por-nome.png" alt="Busca Marca pelo atributo nome">
+</p>
+<p align="center">
+  <img src="prints/7-Modal-visualizar-Marca.png" alt="Modal para visualizar uma Marca já cadastrada">
+</p>
+<p align="center">
+  <img src="prints/8-Modal-atualizar-Marca.png" alt="Modal para atualizar uma Marca já cadastrada">
+</p>
+<p align="center">
+  <img src="prints/9-Modal-remover-Marca.png" alt="Modal para registrar uma Marca cadastrada">
+</p>
+<p align="center">
+  <img src="prints/10-Paginacao-de-registros-de-Marca.png" alt="Paginação de Marcas">
+</p>
+<p align="center">
+  Há também a funcionalidade de Logout no menu que se abre clicando no nome do usuário Logado, em seguida em 'Logout'
+</p>
+
 
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
 
