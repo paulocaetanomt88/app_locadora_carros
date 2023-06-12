@@ -271,31 +271,13 @@
 </template>
 
 <script>
+import Paginate from './Paginate.vue'
 export default {
-  computed: {
-    token() {
-      let token = document.cookie.split(";").find((indice) => {
-        return indice.includes("token=");
-      });
-
-      token = token.split("=")[1];
-      token = "Bearer " + token;
-
-      return token;
-    },
-  },
   data() {
     return {
       urlBase: "http://localhost:8000/api/v1/marca",
       urlPaginacao: '',
       urlFiltro: '',
-      config: {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          Accept: "application/json",
-          Authorization: this.token,
-        },
-      },
       nomeMarca: "",
       arquivoImagem: [],
       transacaoStatus: "",
@@ -317,8 +299,6 @@ export default {
         let config = {
             headers: {
                 'Content-Type': 'multipart/form-data',
-                'Accept': 'application/json',
-                'Authorization': this.token
             }
         }
 
@@ -347,16 +327,9 @@ export default {
         let formData = new FormData();
         formData.append('_method', 'delete')
 
-        let config = {
-            headers: {
-                'Accept': 'application/json',
-                'Authorization': this.token
-            }
-        }
-
         let url = this.urlBase + '/' + this.$store.state.item.id
 
-        axios.post(url, formData, config)
+        axios.post(url, formData)
             .then(response => {
                 this.$store.state.transacao.status = 'sucesso'
                 this.$store.state.transacao.mensagem = response.data.msg
@@ -398,18 +371,10 @@ export default {
         }
     },
     carregarLista() {
-      let config = {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          Accept: "application/json",
-          Authorization: this.token,
-        },
-      };
-
       let url = this.urlBase + '?' + this.urlPaginacao + this.urlFiltro
 
       axios
-        .get(url, config)
+        .get(url)
         .then((response) => {
           this.marcas = response.data;
         })
@@ -428,11 +393,9 @@ export default {
 
       let config = {
         headers: {
-          "Content-Type": "multipart/form-data",
-          Accept: "application/json",
-          Authorization: this.token,
-        },
-      };
+          "Content-Type": "multipart/form-data"
+        }
+      }
 
       // o método post do axios espera por três parâmetros: url, conteúdo e a configuração contendo os headers
       axios

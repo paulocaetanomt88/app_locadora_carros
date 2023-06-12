@@ -39,3 +39,65 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     forceTLS: true
 // });
+
+/*
+    !!! INTERCEPTAR OS REQUESTS DA APLICAÇÃO !!!
+    O método use espera 2 métodos de callback:
+        - O 1º método que vai definir as configurações da requisição antes que ela aconteça
+        - O 2º vai recuperar por parâmetro o erro caso aconteça, podendo retornar a Promise.reject do erro
+*/
+axios.interceptors.request.use(
+    config => {
+        // definir para todas as requisições os parâmetros de accept e authorization
+        config.headers['Accept'] = 'application/json' // o atributo (Accept) pode ser configurado em forma de array
+
+        // recuperando o token de autorização dos cookies
+        let token = document.cookie.split(";").find((indice) => {
+            return indice.includes("token=");
+          });
+
+        token = token.split("=")[1];
+        token = "Bearer " + token;
+
+        config.headers.Authorization = token // ou em forma de atributo de objeto
+
+        console.log('Interceptando o request antes do envio', config)
+        return config
+    },
+    error => {
+        console.log('Erro na requisição: ', error)
+        return Promise.reject(error)
+    }
+)
+
+//   INTERCEPTAR OS RESPONSES DA APLICAÇÃO
+// Se uma requisição for feita com sucesso, esta vai retornar uma resposta
+// mas antes que esta resposta for absorvida por uma aplicação nós poderemos interceptar e tratar isso
+// aplicando lógicas que serão comuns pra todas essas respostas
+axios.interceptors.response.use(
+    // o primeiro método é para tratar a resposta recebida dessa requisição
+    response => {
+        console.log('Interceptando a resposta antes da aplicação', response)
+        return response
+    },
+    // o segundo é para tratar os erros caso aconteçam
+    error => {
+        console.log('Erro na resposta: ', error.response)
+
+        if (error.response.status == 401 && error.response.data.message == "Token has expired") {
+            // Fazer uma nova requisição para rota refresh
+            // vamos passar tanto pelo interceptor do request quanto pelo interceptor deste mesmo response novamente
+            axios.post('http://localhost:8000/api/refresh')
+                .then(response => {
+                    // Se for feito refresh com sucesso, vai obter um response com um novo token
+                    // que será armazenado em document.cookie
+                    document.cookie = 'token='+response.data.token+';SameSite=Lax'
+
+                    // recarregando a página para o navegador refazer a requisição anterior
+                    window.location.reload()
+                })
+        }
+
+        return Promise.reject(error)
+    }
+)
