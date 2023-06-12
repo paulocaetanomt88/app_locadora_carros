@@ -1,9 +1,48 @@
-# Estudo de API com Laravel
+# Estudo de desenvolvimento de API com Laravel e Frontend com Vue.js
 ## API de Locadora de Carros
 #### ( em desenvolvimento )
-#### seguindo as seções 17, 18 e 19 do curso de Desenvolvimento Web Avançado com PHP, Laravel e Vue.JS na plataforma Udemy
+<br />
+#### Funções concluídas do lado da API
+Através de uma aplicação de manipulação de API como o Postman, o usuário pode: <br /> 
+- cadastrar marcas, modelos, carros, clientes e locações armazenando os registros no banco de dados <br />
+- buscar um registro por id <br />
+- listar todos os registros <br />
+- listar os registros que se enquadram em um conjunto de atributos parametrizados <br />
+- visualizar dados e um registro específico por id <br />
+- atualizar todos dados através do protocolo PUT <br />
+- atualizar apenas alguns dados através do protocolo PATCH <br />
+- excluir um registro do banco de dados. <br />
   
+##### Observações sobre a API:
+ - apenas a rota de login está aberta sem exigir autenticação <br />
+ - se a autenticação for feita com sucesso gera um novo token padrão JWT Bearer <br />
+ - foi configurado o prefixo 'v1' para acessar a api permitindo que haja versões diferentes <br />
+ - deve ser configurado no Postman, ou outro manipulador de API, os Headers: "Accept" -> "application/json" e o "Authorization" com o valor Bearer seguido do token gerado que fica algo como "Bearer eyJ0eXAiOi..." <br />
+ - o 'JWT_TTL' está configurado para 60 minutos, mas pode ser alterado o tempo de validade no arquivo 'jwt.php' dentro do diretório 'config' <br />
+ - o cadastro de marcas exige que seja enviado uma imagem de logomarca, para isso configure no Postman o Body da requisição na opção form-data a Key 'imagem' <br />
+ - como a api permite upload de arquivos, deve ser criado um link simbólico executando o comando: `php artisan storage:link` <br />
+  
+#### Funções concluídas do lado da aplicação Frontend
+Foram desenvolvidas as páginas para as seguintes funcionalidades: <br />
+- registro de usuário <br />
+- login de usuário <br />
+- homepage do administrador <br />
+- menu dropdown <br />
+- funcionalidades de CRUD de marcas <br />
+- busca de marcas por filtros: id ou nome <br />
+- listagem com paginação para marcas <br />
+  
+* As funcionalidades para clientes, locações, carros e modelos serão desenvolvidas futuramente. <br />
+* Toda vez que for feito login pelo formulário será gerado um novo token, caso este expire, basta fazer logout e login novamente 
 
+### Para testar o projeto
+1. Clone o repositório dentro de uma pasta específica executando o comando: `git clone https://github.com/paulocaetanomt88/app_locadora_carros.git` <br />
+2. Acesse o diretório do projeto baixado, exemplo: `cd app_locadora_carros` <br />
+3. Crie um banco de dados MySQL e configure o nome do banco criado, o host e a porta do SGBD no arquivo .env do projeto Laravel na raiz do app <br />
+4. Para rodar a aplicação backend e acessar as funções de API, execute o comando: `php artisan serve` <br />
+5. Para rodar a aplicação frontend e acessar as interfaces pelo navegador, execute o comando: `npm run watch` <br />
+
+#### seguindo as seções 17, 18 e 19 do curso de Desenvolvimento Web Avançado com PHP, Laravel e Vue.JS na plataforma Udemy  
 ### Seção "17 - APIS, Web services e REST"
 <ul>
     <li>Criação das Models, Controllers e Migrations</li>
