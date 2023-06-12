@@ -1,7 +1,8 @@
 # Estudo de desenvolvimento de API com Laravel e Frontend com Vue.js
 ## API de Locadora de Carros
 #### ( em desenvolvimento )
-<br />
+<br />  
+
 #### Funções concluídas do lado da API
 Através de uma aplicação de manipulação de API como o Postman, o usuário pode: <br /> 
 - cadastrar marcas, modelos, carros, clientes e locações armazenando os registros no banco de dados <br />
@@ -32,8 +33,8 @@ Foram desenvolvidas as páginas para as seguintes funcionalidades: <br />
 - busca de marcas por filtros: id ou nome <br />
 - listagem com paginação para marcas <br />
   
-* As funcionalidades para clientes, locações, carros e modelos serão desenvolvidas futuramente. <br />
-* Toda vez que for feito login pelo formulário será gerado um novo token, caso este expire, basta fazer logout e login novamente 
+ As funcionalidades para clientes, locações, carros e modelos serão desenvolvidas futuramente. <br />
+ Toda vez que for feito login pelo formulário será gerado um novo token, caso este expire, basta fazer logout e login novamente 
 
 ### Para testar o projeto
 1. Clone o repositório dentro de uma pasta específica executando o comando: `git clone https://github.com/paulocaetanomt88/app_locadora_carros.git` <br />
